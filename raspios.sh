@@ -7,6 +7,9 @@ outfile="$HOME/install.log"
 dist_id=""
 cpu=$(arch)
 
+
+# functions ===================================================================
+
 error_exit()
 {
     msg="$1"
@@ -45,6 +48,7 @@ build_src()
     fi
 }
 
+
 # tests =======================================================================
 
 if [[ "$EUID" = 0 ]]; then
@@ -70,6 +74,7 @@ test "$model" == "Raspberry Pi 4 Model B Rev 1.4" \
     
 test -f "/etc/apt/sources.list.d/raspi.list" && opt_raspi=1
 
+
 # start =======================================================================
 
 echo "===============================================================================" | tee -a $outfile
@@ -87,13 +92,6 @@ EOF
 fi
 
 # raspios ---------------------------------------------------------------------
-
-#~ dest="/boot/firmware/cmdline.txt"
-#~ if [[ -f $dest ]] && [[ ! -f ${dest}.bak ]]; then
-    #~ echo "*** edit /boot/cmdline.txt" | tee -a "$outfile"
-    #~ sudo cp "$dest" ${dest}.bak 2>&1 | tee -a "$outfile"
-    #~ sudo sed -i 's/ quiet splash plymouth.ignore-serial-consoles//' "$dest"
-#~ fi
 
 dest="/boot/firmware/config.txt"
 if [[ -f "$dest" ]] && [[ ! -f "${dest}.bak" ]]; then
@@ -123,6 +121,7 @@ dtoverlay=disable-wifi
 EOF
 fi
 
+
 # install base ================================================================
 
 dest=/usr/bin/xfce4-terminal
@@ -133,6 +132,7 @@ if [[ ! -f "$dest" ]]; then
     sudo apt -y install $APPLIST 2>&1 | tee -a "$outfile"
     test "$?" -eq 0 || error_exit "installation failed"
 fi
+
 
 # uninstall ===================================================================
 
@@ -146,28 +146,10 @@ if [[ -f "$dest" ]]; then
     test "$?" -eq 0 || error_exit "autoremove failed"
 fi
 
-# services --------------------------------------------------------------------
 
-#~ if [ "$(pidof cupsd)" ]; then
-    #~ echo "*** disable services" | tee -a "$outfile"
-    #~ APPLIST="anacron apparmor avahi-daemon cron cups cups-browsed"
-    #~ APPLIST+=" ModemManager"
-    #~ sudo systemctl stop $APPLIST 2>&1 | tee -a "$outfile"
-    #~ sudo systemctl disable $APPLIST 2>&1 | tee -a "$outfile"
-    #~ APPLIST="anacron.timer apt-daily.timer apt-daily-upgrade.timer"
-    #~ sudo systemctl stop $APPLIST 2>&1 | tee -a "$outfile"
-    #~ sudo systemctl disable $APPLIST 2>&1 | tee -a "$outfile"
-#~ fi
+# system settings =============================================================
 
-# system settings -------------------------------------------------------------
-
-dest="/etc/xdg/labwc/rc.xml"
-if [[ ! -f "${dest}.bak" ]]; then
-    echo "*** install rc.xml" | tee -a "$outfile"
-    sudo cp "$dest" "${dest}.bak"
-    sudo cp "$basedir/labwc/rc.xml" "$dest"
-    test "$?" -eq 0 || error_exit "install rc.xml failed"
-fi
+# sudo sed -i.bak -e '/^#/d' /etc/lightdm/lightdm.conf
 
 dest="/etc/xdg/labwc/autostart"
 if [[ ! -f "${dest}.bak" ]]; then
@@ -177,6 +159,14 @@ if [[ ! -f "${dest}.bak" ]]; then
     test "$?" -eq 0 || error_exit "install autostart failed"
 fi
 
+dest="/etc/xdg/labwc/rc.xml"
+if [[ ! -f "${dest}.bak" ]]; then
+    echo "*** install rc.xml" | tee -a "$outfile"
+    sudo cp "$dest" "${dest}.bak"
+    sudo cp "$basedir/labwc/rc.xml" "$dest"
+    test "$?" -eq 0 || error_exit "install rc.xml failed"
+fi
+
 dest="$HOME/.config/user-dirs.dirs"
 if [[ ! -f "${dest}.bak" ]]; then
     echo "*** user directories" | tee -a "$outfile"
@@ -184,6 +174,26 @@ if [[ ! -f "${dest}.bak" ]]; then
     sudo cp "$basedir/home/user-dirs.dirs" "$dest"
     test "$?" -eq 0 || error_exit "user directories failed"
 fi
+
+
+# user settings ===============================================================
+
+dest="$HOME/config"
+if [[ ! -L "$dest" ]]; then
+    echo "*** config link" | tee -a "$outfile"
+    ln -s "$HOME/.config" "$dest" 2>&1 | tee -a "$outfile"
+    echo "*** add user to adm group" | tee -a "$outfile"
+    sudo usermod -a -G adm $currentuser 2>&1 | tee -a "$outfile"
+fi
+
+# aliases ---------------------------------------------------------------------
+
+dest="$HOME/.bash_aliases"
+if [[ ! -f "$dest" ]]; then
+    echo "*** aliases" | tee -a "$outfile"
+    cp "$basedir/home/bash_aliases" "$dest" 2>&1 | tee -a "$outfile"
+fi
+
 
 # build programs ==============================================================
 
@@ -202,6 +212,7 @@ test -f "$dest" || error_exit "compilation failed"
 dest="/usr/local/bin/apt-upgrade"
 build_src "systools" "$dest"
 test -f "$dest" || error_exit "compilation failed"
+
 
 # terminate ===================================================================
 
