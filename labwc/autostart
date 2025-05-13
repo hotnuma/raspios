@@ -1,7 +1,7 @@
 # https://github.com/labwc/labwc/blob/master/docs/autostart
 # /usr/share/doc/labwc/autostart
 
-swaybg -i /usr/share/rpd-wallpaper/clouds.jpg >/dev/null 2>&1 &
+swaybg -i /usr/share/rpd-wallpaper/fisherman.jpg >/dev/null 2>&1 &
 /usr/bin/lwrespawn /usr/bin/wf-panel-pi &
 #volman &
 #wl-clip-persist -c regular &

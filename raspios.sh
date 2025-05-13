@@ -66,8 +66,6 @@ if [[ -f /etc/os-release ]]; then
     dist_id=$VERSION_CODENAME
 fi
 
-test ! -d "/boot/grub" || error_exit "not a Raspberry Pi"
-
 model=$(tr -d '\0' </sys/firmware/devicetree/base/model)
 test "$model" == "Raspberry Pi 4 Model B Rev 1.4" \
     || error_exit "wrong board model"
