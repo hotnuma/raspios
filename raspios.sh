@@ -149,30 +149,11 @@ fi
 
 # system settings =============================================================
 
-# sudo sed -i.bak -e '/^#/d' /etc/lightdm/lightdm.conf
-
-dest="/etc/xdg/labwc/autostart"
+dest="/etc/lightdm/lightdm.conf"
 if [[ ! -f "${dest}.bak" ]]; then
-    echo "*** install autostart" | tee -a "$outfile"
-    sudo cp "$dest" "${dest}.bak"
-    sudo cp "$basedir/labwc/autostart" "$dest"
-    test "$?" -eq 0 || error_exit "install autostart failed"
-fi
-
-dest="/etc/xdg/labwc/rc.xml"
-if [[ ! -f "${dest}.bak" ]]; then
-    echo "*** install rc.xml" | tee -a "$outfile"
-    sudo cp "$dest" "${dest}.bak"
-    sudo cp "$basedir/labwc/rc.xml" "$dest"
-    test "$?" -eq 0 || error_exit "install rc.xml failed"
-fi
-
-dest="$HOME/.config/user-dirs.dirs"
-if [[ ! -f "${dest}.bak" ]]; then
-    echo "*** user directories" | tee -a "$outfile"
-    sudo cp "$dest" "${dest}.bak"
-    sudo cp "$basedir/home/user-dirs.dirs" "$dest"
-    test "$?" -eq 0 || error_exit "user directories failed"
+    echo "*** lightdm backup" | tee -a "$outfile"
+    sudo sed -i.bak -e '/^#/d' "$dest"
+    test "$?" -eq 0 || error_exit "lightdm backup failed"
 fi
 
 
@@ -185,6 +166,31 @@ if [[ ! -L "$dest" ]]; then
     echo "*** add user to adm group" | tee -a "$outfile"
     sudo usermod -a -G adm $currentuser 2>&1 | tee -a "$outfile"
 fi
+
+create_dir "$HOME/.config/custom-labwc/"
+
+dest="$HOME/.config/custom-labwc/autostart"
+if [[ ! -f "$dest" ]]; then
+    echo "*** install autostart" | tee -a "$outfile"
+    sudo cp "$basedir/labwc/autostart" "$dest"
+    test "$?" -eq 0 || error_exit "install autostart failed"
+fi
+
+dest="$HOME/.config/custom-labwc/rc.xml"
+if [[ ! -f "$dest" ]]; then
+    echo "*** install rc.xml" | tee -a "$outfile"
+    sudo cp "$basedir/labwc/rc.xml" "$dest"
+    test "$?" -eq 0 || error_exit "install rc.xml failed"
+fi
+
+dest="$HOME/.config/user-dirs.dirs"
+if [[ ! -f "${dest}.bak" ]]; then
+    echo "*** user directories" | tee -a "$outfile"
+    sudo cp "$dest" "${dest}.bak"
+    sudo cp "$basedir/home/user-dirs.dirs" "$dest"
+    test "$?" -eq 0 || error_exit "user directories failed"
+fi
+
 
 # aliases ---------------------------------------------------------------------
 
