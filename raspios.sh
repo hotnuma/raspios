@@ -181,6 +181,13 @@ if [[ ! -f "$dest" ]]; then
     test "$?" -eq 0 || error_exit "install autostart failed"
 fi
 
+dest="$HOME/.config/custom-labwc/environment"
+if [[ ! -f "$dest" ]]; then
+    echo "*** install environment" | tee -a "$outfile"
+    cp "$basedir/labwc/environment" "$dest"
+    test "$?" -eq 0 || error_exit "install environment failed"
+fi
+
 dest="$HOME/.config/custom-labwc/rc.xml"
 if [[ ! -f "$dest" ]]; then
     echo "*** install rc.xml" | tee -a "$outfile"
