@@ -137,11 +137,27 @@ fi
 dest=/usr/bin/plymouth
 if [[ -f "$dest" ]]; then
     echo "*** uninstall softwares" | tee -a "$outfile"
-    APPLIST="gvfs-backends plymouth"
+    APPLIST="gvfs-backends plymouth xdg-desktop-portal"
     sudo apt -y purge $APPLIST 2>&1 | tee -a "$outfile"
     test "$?" -eq 0 || error_exit "uninstall failed"
     sudo apt -y autoremove 2>&1 | tee -a "$outfile"
     test "$?" -eq 0 || error_exit "autoremove failed"
+fi
+
+
+# services ====================================================================
+
+which thd && sudo apt -y purge triggerhappy 2>&1 | tee -a "$outfile"
+
+if [ "$(pidof cupsd)" ]; then
+    echo "*** disable services" | tee -a "$outfile"
+    APPLIST="anacron apparmor avahi-daemon cron cups cups-browsed"
+    APPLIST+=" ModemManager"
+    sudo systemctl stop $APPLIST 2>&1 | tee -a "$outfile"
+    sudo systemctl disable $APPLIST 2>&1 | tee -a "$outfile"
+    APPLIST="anacron.timer apt-daily.timer apt-daily-upgrade.timer"
+    sudo systemctl stop $APPLIST 2>&1 | tee -a "$outfile"
+    sudo systemctl disable $APPLIST 2>&1 | tee -a "$outfile"
 fi
 
 
