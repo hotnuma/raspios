@@ -126,7 +126,7 @@ dest=/usr/bin/xfce4-terminal
 if [[ ! -f "$dest" ]]; then
     sys_upgrade
     echo "*** install base" | tee -a "$outfile"
-    APPLIST="swaybg thunar xfce4-terminal"
+    APPLIST="mpv swaybg thunar xfce4-terminal"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$outfile"
     test "$?" -eq 0 || error_exit "installation failed"
 fi
@@ -143,6 +143,8 @@ if [[ -f "$dest" ]]; then
     sudo apt -y autoremove 2>&1 | tee -a "$outfile"
     test "$?" -eq 0 || error_exit "autoremove failed"
 fi
+
+test -f "/usr/bin/yt-dlp" && sudo apt purge yt-dlp
 
 
 # services ====================================================================
