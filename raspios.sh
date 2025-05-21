@@ -267,6 +267,15 @@ dest="/usr/local/bin/apt-upgrade"
 build_src "systools" "$dest"
 test -f "$dest" || error_exit "compilation failed"
 
+dest=/usr/local/bin/hoedown
+if [[ ! -f "$dest" ]]; then
+    echo "*** build hoedown" | tee -a "$outfile"
+    git clone https://github.com/hoedown/hoedown.git 2>&1 | tee -a "$outfile"
+    pushd hoedown 1>/dev/null
+    make && sudo make install 2>&1 | tee -a "$outfile"
+    sudo strip /usr/local/bin/hoedown 2>&1 | tee -a "$outfile"
+fi
+
 
 # terminate ===================================================================
 
