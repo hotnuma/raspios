@@ -131,6 +131,16 @@ if [[ ! -f "$dest" ]]; then
     test "$?" -eq 0 || error_exit "installation failed"
 fi
 
+# install dev packages --------------------------------------------------------
+
+dest=/usr/include/gtk-3.0/gtk/gtk.h
+if [[ ! -f "$dest" ]]; then
+    echo "*** install dev packages" | tee -a "$outfile"
+    APPLIST="libgtk-3-dev libnotify-dev libxfce4ui-2-dev"
+    sudo apt -y install $APPLIST 2>&1 | tee -a "$outfile"
+    test "$?" -eq 0 || error_exit "installation failed"
+fi
+
 
 # uninstall ===================================================================
 
@@ -144,7 +154,7 @@ if [[ -f "$dest" ]]; then
     test "$?" -eq 0 || error_exit "autoremove failed"
 fi
 
-test -f "/usr/bin/yt-dlp" && sudo apt purge yt-dlp
+test -f "/usr/bin/yt-dlp" && sudo apt -y purge yt-dlp
 
 
 # services ====================================================================
@@ -243,6 +253,14 @@ pushd "$builddir" 1>/dev/null
 
 dest="/usr/local/include/tinyc/cstring.h"
 build_src "libtinyc" "$dest"
+test -f "$dest" || error_exit "compilation failed"
+
+dest="/usr/local/include/tinyui/etkaction.h"
+build_src "libtinyui" "$dest"
+test -f "$dest" || error_exit "compilation failed"
+
+dest="/usr/local/bin/fileman"
+build_src "fileman" "$dest"
 test -f "$dest" || error_exit "compilation failed"
 
 dest="/usr/local/bin/apt-upgrade"
