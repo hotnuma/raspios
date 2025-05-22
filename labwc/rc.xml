@@ -45,7 +45,7 @@
       <action name="Execute" command="firefox"/>
     </keybind>
     <keybind key="W-e">
-      <action name="Execute" command="thunar /home/hotnuma/Downloads"/>
+      <action name="Execute" command="fileman /home/hotnuma/Downloads"/>
     </keybind>
     <keybind key="W-s">
       <action name="Execute" command="xfce4-taskmanager"/>
@@ -54,7 +54,7 @@
       <action name="Execute" command="/usr/local/bin/rofi -show run"/>
     </keybind>
     <keybind key="W-t">
-      <action name="Execute" command="xfce4-terminal"/>
+      <action name="Execute" command="xfce4-terminal --default-working-directory=/home/hotnuma/Downloads/"/>
     </keybind>
     <keybind key="W-KP_4">
       <action name="SnapToEdge" direction="left"/>

@@ -1,0 +1,19 @@
+<h2>Raspi OS</h2>
+
+<p>Bare minimum Raspi OS post-install script to make it usable.</p>
+
+<h4>Manual configuration</h4>
+
+<ul>
+<li><p>Install wl-clip-persist</p>
+
+<pre><code>wget https://github.com/hotnuma/sysconfig/raw/refs/heads/master/labwc/wl-clip-persist-aarch64.zip
+sudo unzip -d /usr/local/bin/ wl-clip-persist-aarch64.zip
+nano ~/.config/custom-labwc/autostart
+</code></pre></li>
+<li><p>Set prefered mpv resolution</p>
+
+<p>create a mpv.conf file and add the following :</p>
+
+<p><code>ytdl-format=bestvideo[height&lt;=?480]+bestaudio/best</code></p></li>
+</ul>
