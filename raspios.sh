@@ -175,13 +175,6 @@ fi
 
 # system settings =============================================================
 
-dest="/usr/share/wayland-sessions/custom-labwc.desktop"
-if [[ ! -f "$dest" ]]; then
-    echo "*** install custom session" | tee -a "$outfile"
-    sudo cp "$basedir/root/custom-labwc.desktop" "$dest"
-    test "$?" -eq 0 || error_exit "install autostart failed"
-fi
-
 dest="/etc/lightdm/lightdm.conf"
 if [[ ! -f "${dest}.bak" ]]; then
     echo "*** lightdm backup" | tee -a "$outfile"
@@ -200,27 +193,13 @@ if [[ ! -L "$dest" ]]; then
     sudo usermod -a -G adm $currentuser 2>&1 | tee -a "$outfile"
 fi
 
-create_dir "$HOME/.config/custom-labwc/"
-
-dest="$HOME/.config/custom-labwc/autostart"
-if [[ ! -f "$dest" ]]; then
-    echo "*** install autostart" | tee -a "$outfile"
+dest="$HOME/.config/labwc/"
+if [[ ! -f "${dest}/autostart" ]]; then
+    echo "*** install labwc config" | tee -a "$outfile"
     cp "$basedir/labwc/autostart" "$dest"
-    test "$?" -eq 0 || error_exit "install autostart failed"
-fi
-
-dest="$HOME/.config/custom-labwc/environment"
-if [[ ! -f "$dest" ]]; then
-    echo "*** install environment" | tee -a "$outfile"
     cp "$basedir/labwc/environment" "$dest"
-    test "$?" -eq 0 || error_exit "install environment failed"
-fi
-
-dest="$HOME/.config/custom-labwc/rc.xml"
-if [[ ! -f "$dest" ]]; then
-    echo "*** install rc.xml" | tee -a "$outfile"
     cp "$basedir/labwc/rc.xml" "$dest"
-    test "$?" -eq 0 || error_exit "install rc.xml failed"
+    test "$?" -eq 0 || error_exit "install autostart failed"
 fi
 
 dest="$HOME/.config/user-dirs.dirs"
