@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <labwc_config>
-    
   <theme>
     <name>AdwaitaRevisitedLight</name>
     <cornerRadius>6</cornerRadius>
@@ -25,7 +24,6 @@
     </font>
     <dropShadows>yes</dropShadows>
   </theme>
-
   <keyboard>
     <numlock>on</numlock>
     <default/>
@@ -65,9 +63,8 @@
       </action>
     </keybind>
   </keyboard>
-
   <mouse>
-    <default />
+    <default/>
     <context name="Title">
       <mousebind button="Right" action="Click">
       </mousebind>
@@ -80,23 +77,20 @@
     </context>
     <context name="All">
       <mousebind direction="W-Up" action="Scroll">
-        <action name="ZoomIn" />
+        <action name="ZoomIn"/>
       </mousebind>
       <mousebind direction="W-Down" action="Scroll">
-        <action name="ZoomOut" />
+        <action name="ZoomOut"/>
       </mousebind>
-     </context>
+    </context>
   </mouse>
-
   <windowRules>
-    <windowRule identifier="Kodi" serverDecoration="yes" />
+    <windowRule identifier="Kodi" serverDecoration="yes"/>
   </windowRules>
-
   <snapping>
     <range>0</range>
     <topMaximize>no</topMaximize>
   </snapping>
-
   <magnifier>
     <width>-1</width>
     <height>-1</height>
@@ -104,25 +98,26 @@
     <increment>0.2</increment>
     <useFilter>false</useFilter>
   </magnifier>
-
   <windowSwitcher show="yes" preview="yes" outlines="yes" allWorkspaces="no">
     <fields>
-      <field content="title" width="100%" />
+      <field content="title" width="100%"/>
     </fields>
   </windowSwitcher>
-
-  <touch deviceName="10-0038 generic ft5x06 (79)" mapToOutput="DSI-1" mouseEmulation="yes" />
-  <touch deviceName="11-0038 generic ft5x06 (79)" mapToOutput="DSI-2" mouseEmulation="yes" />
-  <touch deviceName="6-0038 generic ft5x06 (79)" mapToOutput="DSI-1" mouseEmulation="yes" />
-  <touch deviceName="4-0038 generic ft5x06 (79)" mapToOutput="DSI-2" mouseEmulation="yes" />
-  <touch deviceName="10-0038 generic ft5x06 (00)" mapToOutput="DSI-1" mouseEmulation="yes" />
-  <touch deviceName="11-0038 generic ft5x06 (00)" mapToOutput="DSI-2" mouseEmulation="yes" />
-  <touch deviceName="6-0038 generic ft5x06 (00)" mapToOutput="DSI-1" mouseEmulation="yes" />
-  <touch deviceName="4-0038 generic ft5x06 (00)" mapToOutput="DSI-2" mouseEmulation="yes" />
-  <touch deviceName="10-005d Goodix Capacitive TouchScreen" mapToOutput="DSI-1" mouseEmulation="yes" />
-  <touch deviceName="11-005d Goodix Capacitive TouchScreen" mapToOutput="DSI-2" mouseEmulation="yes" />
-  <touch deviceName="6-005d Goodix Capacitive TouchScreen" mapToOutput="DSI-1" mouseEmulation="yes" />
-  <touch deviceName="4-005d Goodix Capacitive TouchScreen" mapToOutput="DSI-2" mouseEmulation="yes" />
-
+  <touch deviceName="10-0038 generic ft5x06 (79)" mapToOutput="DSI-1" mouseEmulation="yes"/>
+  <touch deviceName="11-0038 generic ft5x06 (79)" mapToOutput="DSI-2" mouseEmulation="yes"/>
+  <touch deviceName="6-0038 generic ft5x06 (79)" mapToOutput="DSI-1" mouseEmulation="yes"/>
+  <touch deviceName="4-0038 generic ft5x06 (79)" mapToOutput="DSI-2" mouseEmulation="yes"/>
+  <touch deviceName="10-0038 generic ft5x06 (00)" mapToOutput="DSI-1" mouseEmulation="yes"/>
+  <touch deviceName="11-0038 generic ft5x06 (00)" mapToOutput="DSI-2" mouseEmulation="yes"/>
+  <touch deviceName="6-0038 generic ft5x06 (00)" mapToOutput="DSI-1" mouseEmulation="yes"/>
+  <touch deviceName="4-0038 generic ft5x06 (00)" mapToOutput="DSI-2" mouseEmulation="yes"/>
+  <touch deviceName="10-005d Goodix Capacitive TouchScreen" mapToOutput="DSI-1" mouseEmulation="yes"/>
+  <touch deviceName="11-005d Goodix Capacitive TouchScreen" mapToOutput="DSI-2" mouseEmulation="yes"/>
+  <touch deviceName="6-005d Goodix Capacitive TouchScreen" mapToOutput="DSI-1" mouseEmulation="yes"/>
+  <touch deviceName="4-005d Goodix Capacitive TouchScreen" mapToOutput="DSI-2" mouseEmulation="yes"/>
+  <libinput>
+    <device>
+      <naturalScroll/>
+    </device>
+  </libinput>
 </labwc_config>
-

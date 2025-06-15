@@ -141,7 +141,7 @@ fi
 dest=/usr/include/gtk-3.0/gtk/gtk.h
 if [[ ! -f "$dest" ]]; then
     echo "*** install dev packages" | tee -a "$outfile"
-    APPLIST="libgtk-3-dev libnotify-dev libxfce4ui-2-dev"
+    APPLIST="libgtk-3-dev libnotify-dev libxfce4ui-2-dev libxml2-dev"
     sudo apt -y install $APPLIST 2>&1 | tee -a "$outfile"
     test "$?" -eq 0 || error_exit "installation failed"
 fi
@@ -283,6 +283,17 @@ if [[ ! -f "$dest" ]]; then
     sudo strip /usr/local/bin/hoedown 2>&1 | tee -a "$outfile"
 fi
 
+dest=/usr/local/bin/labwc-tweaks-gtk
+if [[ ! -f "$dest" ]]; then
+    echo "*** build labwc-tweaks-gtk" | tee -a "$outfile"
+    git clone https://github.com/labwc/labwc-tweaks-gtk.git \
+    && pushd labwc-tweaks-gtk 1>/dev/null
+    meson setup build -Dbuildtype=release | tee -a "$outfile"
+    meson compile -C build | tee -a "$outfile"
+    sudo meson install -C build | tee -a "$outfile"
+    test "$?" -eq 0 || error_exit "installation failed"
+    popd 1>/dev/null
+fi
 
 # terminate ===================================================================
 
