@@ -10,7 +10,7 @@ Bare minimum Raspi OS post-install script to make it usable.
     ```
     wget https://github.com/hotnuma/sysconfig/raw/refs/heads/master/labwc/wl-clip-persist-aarch64.zip
     sudo unzip -d /usr/local/bin/ wl-clip-persist-aarch64.zip
-    nano ~/.config/custom-labwc/autostart
+    nano ~/.config/labwc/autostart
     ```
 
 * Set prefered mpv resolution
