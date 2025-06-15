@@ -180,6 +180,16 @@ fi
 
 # system settings =============================================================
 
+dest=/etc/environment
+if [[ ! -f ${dest}.bak ]]; then
+    echo "*** environment" | tee -a "$outfile"
+    sudo cp "$dest" ${dest}.bak 2>&1 | tee -a "$outfile"
+    sudo tee "$dest" > /dev/null << "EOF"
+GTK_OVERLAY_SCROLLING=0
+NO_AT_BRIDGE=1
+EOF
+fi
+
 dest="/etc/lightdm/lightdm.conf"
 if [[ ! -f "${dest}.bak" ]]; then
     echo "*** lightdm backup" | tee -a "$outfile"
