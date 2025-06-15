@@ -1,5 +1,8 @@
 <?xml version="1.0"?>
 <labwc_config>
+  <placement>
+    <policy>automatic</policy>
+  </placement>
   <theme>
     <name>AdwaitaRevisitedLight</name>
     <cornerRadius>6</cornerRadius>
