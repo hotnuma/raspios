@@ -3,6 +3,4 @@
 
 swaybg -i /usr/share/rpd-wallpaper/fisherman.jpg >/dev/null 2>&1 &
 /usr/bin/lwrespawn /usr/bin/wf-panel-pi &
-#volman &
 wl-clip-persist -c regular &
-#kanshi &
