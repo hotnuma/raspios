@@ -1,32 +1,29 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<openbox_config xmlns="http://openbox.org/3.4/rc">
-
+<?xml version="1.0"?>
+<labwc_config>
+    
   <theme>
-    <name>PiXflat</name>
-    <cornerRadius>0</cornerRadius>
+    <name>AdwaitaRevisitedLight</name>
+    <cornerRadius>6</cornerRadius>
     <keepBorder>yes</keepBorder>
     <font place="ActiveWindow">
-      <name>PibotoLt</name>
+      <name>DejaVu Sans</name>
       <size>12</size>
       <weight>Normal</weight>
       <slant>Normal</slant>
     </font>
     <font place="InactiveWindow">
-      <name>PibotoLt</name>
+      <name>DejaVu Sans</name>
       <size>12</size>
       <weight>Normal</weight>
       <slant>Normal</slant>
     </font>
     <font place="OnScreenDisplay">
-      <name>PibotoLt</name>
+      <name>DejaVu Sans</name>
       <size>12</size>
       <weight>Normal</weight>
       <slant>Normal</slant>
     </font>
     <dropShadows>yes</dropShadows>
-    <titlebar>
-      <layout>:iconify,max,close</layout>
-    </titlebar>
   </theme>
 
   <keyboard>
@@ -127,5 +124,5 @@
   <touch deviceName="6-005d Goodix Capacitive TouchScreen" mapToOutput="DSI-1" mouseEmulation="yes" />
   <touch deviceName="4-005d Goodix Capacitive TouchScreen" mapToOutput="DSI-2" mouseEmulation="yes" />
 
-</openbox_config>
+</labwc_config>
 

@@ -2,6 +2,7 @@
 
 basedir="$(dirname -- "$(readlink -f -- "$0";)")"
 builddir="$HOME/DevFiles"
+tempdir=$(mktemp -d)
 currentuser="$USER"
 outfile="$HOME/install.log"
 dist_id=""
@@ -50,6 +51,10 @@ build_src()
 
 
 # tests =======================================================================
+
+if [[ ! -d "$tempdir" ]]; then
+    error_exit "*** mktemp failed"
+fi
 
 if [[ "$EUID" = 0 ]]; then
     error_exit "*** must not be run as root"
@@ -210,13 +215,36 @@ if [[ ! -f "${dest}.bak" ]]; then
     test "$?" -eq 0 || error_exit "user directories failed"
 fi
 
-
 # aliases ---------------------------------------------------------------------
 
 dest="$HOME/.bash_aliases"
 if [[ ! -f "$dest" ]]; then
-    echo "*** aliases" | tee -a "$outfile"
-    cp "$basedir/home/bash_aliases" "$dest" 2>&1 | tee -a "$outfile"
+    echo "*** install bash aliases" | tee -a "$outfile"
+    wget -P "$tempdir" "https://github.com/hotnuma/sysconfig/raw/refs/heads/master/home/bash_aliases"
+    cp "$tempdir/bash_aliases" "$dest" 2>&1 | tee -a "$outfile"
+    test "$?" -eq 0 || error_exit "install bash aliases failed"
+fi
+
+# Notwaita White cursors ------------------------------------------------------
+
+dest="$HOME/.local/share/icons"
+if [[ ! -d "$dest/NotwaitaWhite" ]]; then
+    echo "*** install NotwaitaWhite cursors" | tee -a "$outfile"
+    wget -P "$tempdir" "https://github.com/hotnuma/sysconfig/raw/refs/heads/master/labwc/cursors-notwaita-white.zip"
+    src="$tempdir/cursors-notwaita-white.zip"
+    unzip -d "$dest" "$src" 2>&1 | tee -a "$outfile"
+    test "$?" -eq 0 || error_exit "installation failed"
+fi
+
+# AdwaitaRevisitedLight -------------------------------------------------------
+
+dest="$HOME/.local/share/themes"
+if [[ ! -d "$dest/AdwaitaRevisitedLight" ]]; then
+    echo "*** install AdwaitaRevisitedLight theme" | tee -a "$outfile"
+    wget -P "$tempdir" "https://github.com/hotnuma/sysconfig/raw/refs/heads/master/labwc/theme-adwaita-light.zip"
+    src="$tempdir/theme-adwaita-light.zip"
+    unzip -d "$dest" "$src" 2>&1 | tee -a "$outfile"
+    test "$?" -eq 0 || error_exit "installation failed"
 fi
 
 
@@ -238,12 +266,12 @@ dest="/usr/local/include/tinyui/etkaction.h"
 build_src "libtinyui" "$dest"
 test -f "$dest" || error_exit "compilation failed"
 
-dest="/usr/local/bin/fileman"
-build_src "fileman" "$dest"
-test -f "$dest" || error_exit "compilation failed"
-
 dest="/usr/local/bin/apt-upgrade"
 build_src "systools" "$dest"
+test -f "$dest" || error_exit "compilation failed"
+
+dest="/usr/local/bin/fileman"
+build_src "fileman" "$dest"
 test -f "$dest" || error_exit "compilation failed"
 
 dest=/usr/local/bin/hoedown
