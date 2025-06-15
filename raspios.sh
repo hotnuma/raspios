@@ -198,23 +198,6 @@ if [[ ! -L "$dest" ]]; then
     sudo usermod -a -G adm $currentuser 2>&1 | tee -a "$outfile"
 fi
 
-dest="$HOME/.config/labwc/"
-if [[ ! -f "${dest}/autostart" ]]; then
-    echo "*** install labwc config" | tee -a "$outfile"
-    cp "$basedir/labwc/autostart" "$dest"
-    cp "$basedir/labwc/environment" "$dest"
-    cp "$basedir/labwc/rc.xml" "$dest"
-    test "$?" -eq 0 || error_exit "install autostart failed"
-fi
-
-dest="$HOME/.config/user-dirs.dirs"
-if [[ ! -f "${dest}.bak" ]]; then
-    echo "*** user directories" | tee -a "$outfile"
-    cp "$dest" "${dest}.bak"
-    cp "$basedir/home/user-dirs.dirs" "$dest"
-    test "$?" -eq 0 || error_exit "user directories failed"
-fi
-
 # aliases ---------------------------------------------------------------------
 
 dest="$HOME/.bash_aliases"
@@ -244,6 +227,32 @@ if [[ ! -d "$dest/AdwaitaRevisitedLight" ]]; then
     wget -P "$tempdir" "https://github.com/hotnuma/sysconfig/raw/refs/heads/master/labwc/theme-adwaita-light.zip"
     src="$tempdir/theme-adwaita-light.zip"
     unzip -d "$dest" "$src" 2>&1 | tee -a "$outfile"
+    test "$?" -eq 0 || error_exit "installation failed"
+fi
+
+dest="$HOME/.config/labwc"
+if [[ ! -f "${dest}/autostart" ]]; then
+    echo "*** install labwc config" | tee -a "$outfile"
+    cp "$basedir/labwc/autostart" "$dest/"
+    cp "$basedir/labwc/environment" "$dest/"
+    cp "$basedir/labwc/rc.xml" "$dest/"
+    test "$?" -eq 0 || error_exit "install autostart failed"
+fi
+
+dest="$HOME/.config/user-dirs.dirs"
+if [[ ! -f "${dest}.bak" ]]; then
+    echo "*** user directories" | tee -a "$outfile"
+    cp "$dest" "${dest}.bak"
+    cp "$basedir/home/user-dirs.dirs" "$dest"
+    test "$?" -eq 0 || error_exit "user directories failed"
+fi
+
+dest="$HOME/.config/gtk-3.0/settings.ini"
+if [[ ! -f "$dest" ]]; then
+    echo "*** install settings.ini" | tee -a "$outfile"
+    wget -P "$tempdir" "https://github.com/hotnuma/sysconfig/raw/refs/heads/master/home/settings.ini"
+    src="$tempdir/settings.ini"
+    mv "$src" "$dest" 2>&1 | tee -a "$outfile"
     test "$?" -eq 0 || error_exit "installation failed"
 fi
 
