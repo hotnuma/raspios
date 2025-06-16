@@ -302,6 +302,10 @@ if [[ ! -f "$dest" ]]; then
     sudo strip /usr/local/bin/hoedown 2>&1 | tee -a "$outfile"
 fi
 
+dest="/usr/local/bin/sfind"
+build_src "sfind" "$dest"
+test -f "$dest" || error_exit "compilation failed"
+
 dest=/usr/local/bin/labwc-tweaks-gtk
 if [[ ! -f "$dest" ]]; then
     echo "*** build labwc-tweaks-gtk" | tee -a "$outfile"
