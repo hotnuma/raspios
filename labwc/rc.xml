@@ -61,9 +61,7 @@
       <action name="SnapToEdge" direction="right"/>
     </keybind>
     <keybind key="Print">
-      <action name="Execute">
-        <command>xfce4-screenshooter</command>
-      </action>
+      <action name="Execute" command="grim"/>
     </keybind>
   </keyboard>
   <mouse>

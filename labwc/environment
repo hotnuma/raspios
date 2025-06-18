@@ -6,9 +6,9 @@ XKB_DEFAULT_MODEL=pc105
 XKB_DEFAULT_VARIANT=latin9
 XKB_DEFAULT_OPTIONS=
 
-#XAUTHORITY=~/.Xauthority
-#WLR_XWAYLAND=/usr/bin/xwayland-xauth
-WLR_XWAYLAND=
+XAUTHORITY=~/.Xauthority
+WLR_XWAYLAND=/usr/bin/xwayland-xauth
+#WLR_XWAYLAND=
 
 XCURSOR_THEME=NotwaitaWhite
 XCURSOR_SIZE=24

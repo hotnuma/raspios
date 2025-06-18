@@ -250,14 +250,6 @@ if [[ ! -f "${dest}/autostart" ]]; then
     test "$?" -eq 0 || error_exit "install autostart failed"
 fi
 
-dest="$HOME/.config/user-dirs.dirs"
-if [[ ! -f "${dest}.bak" ]]; then
-    echo "*** user directories" | tee -a "$outfile"
-    cp "$dest" "${dest}.bak"
-    cp "$basedir/home/user-dirs.dirs" "$dest"
-    test "$?" -eq 0 || error_exit "user directories failed"
-fi
-
 dest="$HOME/.config/gtk-3.0/settings.ini"
 if [[ ! -f "$dest" ]]; then
     echo "*** install settings.ini" | tee -a "$outfile"
